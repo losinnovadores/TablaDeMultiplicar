@@ -1,0 +1,14 @@
+program innovadores;
+
+uses
+  Forms,
+  main in '..\Form\main.pas' {mainform},
+  matriculas in '..\Form\matriculas.pas' {fmatricula};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(Tmainform, mainform);
+  Application.Run;
+end.

@@ -1,0 +1,120 @@
+unit main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Menus;
+
+type
+  Tmainform = class(TForm)
+    ListBox1: TListBox;
+    Panel1: TPanel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button1: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+    Button2: TButton;
+    Button3: TButton;
+    MainMenu1: TMainMenu;
+    MatriculasIntegrantes1: TMenuItem;
+    procedure clearEdit(formulario: TForm);
+    procedure Button1Click(Sender: TObject);
+    procedure Edit1KeyPress(Sender: TObject; var Key: Char);
+    procedure Edit2KeyPress(Sender: TObject; var Key: Char);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure MatriculasIntegrantes1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  mainform: Tmainform;
+
+implementation
+
+uses matriculas;
+
+{$R *.dfm}
+
+procedure Tmainform.clearEdit(formulario: TForm);
+var
+  i, tamano :integer;
+begin
+  tamano := formulario.ComponentCount;
+
+  for i := 0 to tamano - 1 do
+    if (formulario.Components[i] is TEdit) then
+       TEdit(formulario.Components[i]).Clear;
+
+  ListBox1.Clear;
+end;
+
+procedure Tmainform.Button1Click(Sender: TObject);
+Var
+  a, b, c, i : Integer;
+  d : String;
+begin
+  If Edit1.Text = '' Then
+    ShowMessage('Campo 1 No debe de estar en Blanco');
+
+  If Edit2.Text = '' Then
+    ShowMessage('Campo 2 No debe de estar en Blanco');
+
+  a := 0;
+  b := 0;
+  c := 0;
+  d := '';
+
+  a := StrToInt(Edit1.Text);
+  b := StrToInt(Edit2.Text);
+
+  ListBox1.Clear;
+
+  For i := 0 To b Do
+    Begin
+      c := a * i;
+      d := IntToStr(a)+' X '+IntToStr(i)+' = '+IntToStr(c);
+      ListBox1.Items.Add(d);
+    End;
+end;
+
+procedure Tmainform.Edit1KeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (key in ['0'..'9',#8]) then
+    begin
+      key := #0;
+      ShowMessage('Solo Introducir Valores Numericos');
+    end
+end;
+
+procedure Tmainform.Edit2KeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (key in ['0'..'9',#8]) then
+    begin
+      key := #0;
+      ShowMessage('Solo Introducir Valores Numericos');
+    end
+end;
+
+procedure Tmainform.Button2Click(Sender: TObject);
+begin
+  clearEdit(self);
+end;
+
+procedure Tmainform.Button3Click(Sender: TObject);
+begin
+ Close;
+end;
+
+procedure Tmainform.MatriculasIntegrantes1Click(Sender: TObject);
+begin
+ fmatricula := Tfmatricula.Create(Self);
+  fmatricula.ShowModal;
+end;
+
+end.
